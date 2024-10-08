@@ -10,10 +10,6 @@ router.get("/", (_req, res: Response<DiaryEntry[]>) => {
     res.send(diaryService.getEntries());
 });
 
-router.post("/", (_req, res) => {
-    res.send('Saving a diary!'); 
-}); 
-
 router.get('/:id', (req, res) => {
     const diary = diaryService.findById(Number(req.params.id)); 
 
