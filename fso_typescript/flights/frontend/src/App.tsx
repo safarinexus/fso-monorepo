@@ -6,30 +6,39 @@ import Add from "./components/Add";
 
 function App() {
   const [diaries, setDiaries] = useState<DiaryEntry[]>([]);
+  const [error, setError] = useState<string>("");
   const [newDiary, setNewDiary] = useState<NewDiaryEntry>({
     date: "", 
-    weather: "",
-    visibility: "",
+    weather: "sunny",
+    visibility: "great",
     comment: "",
   });
 
   useEffect(() => {
     getAllEntries().then(data => {
-      setDiaries(data);
+      if (typeof data === "string") {
+        console.log(data);
+      } else {
+        setDiaries(data);
+      }
     })
   }, []);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     createEntry(newDiary).then(data => {
-      console.log(data);
-      setDiaries(diaries.concat(data));
-    })
-    setNewDiary({
-      date: "", 
-      weather: "",
-      visibility: "",
-      comment: "",
+      if (typeof data === "string") {
+        setError(data);
+      } else {
+        setDiaries(diaries.concat(data));
+        setNewDiary({
+          date: "", 
+          weather: "",
+          visibility: "",
+          comment: "",
+        })
+        setError('');
+      }
     })
   };
 
@@ -44,7 +53,8 @@ function App() {
 
   return (
     <>
-      <Add newDiary={newDiary} handleSubmit={handleSubmit} handleChange={handleChange}/>
+      <Add newDiary={newDiary} handleSubmit={handleSubmit} handleChange={handleChange} />
+      {error !== "" ? (<p style={{color:"red"}}>{error}</p>) : ("") }
       <h1>Diary Entries</h1> 
       <Entries entries={diaries} />
     </>
