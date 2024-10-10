@@ -174,5 +174,5 @@ dmypy.json
 cython_debug/
 
 #patientor frontend fork 
-fso_typescript/exercises/patientor/frontend/
-fso_typescript/flights/flight-diary/
+part9_typescript_fso/exercises/patientor/frontend/
+part9_typescript_fso/flights/flight-diary/
