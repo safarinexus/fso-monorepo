@@ -1,7 +1,13 @@
 FROM node:20
+  
+WORKDIR /usr/src/app
 
-WORKDIR /usr/src/app 
+COPY --chown=node:node . .
 
-COPY ./index.js  /index.js
+RUN npm ci 
 
-CMD node index.js
+ENV DEBUG=playground:*
+  
+USER node
+
+CMD npm start
